@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Prince George's County Data</title>
+	<style>
+		table {
+			border-collapse: collapse;
+			width: 100%;
+		}
+		th, td {
+			text-align: left;
+			padding: 8px;
+			border: 1px solid #ddd;
+		}
+		tr:nth-child(even) {
+			background-color: #f2f2f2;
+		}
+	</style>
+</head>
+<body>
+	<h1>Prince George's County Data</h1>
+	<table>
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Category</th>
+				<th>Address</th>
+				<th>City</th>
+				<th>State</th>
+				<th>Zip</th>
+			</tr>
+		</thead>
+		<tbody id="data"></tbody>
+	</table>
+	<script>
+		fetch('https://data.princegeorgescountymd.gov/resource/sk5x-gxv7.json')
+			.then(response => response.json())
+			.then(data => {
+				let tableData = '';
+				data.forEach(entry => {
+					tableData += `
+						<tr>
+							<td>${entry.name}</td>
+							<td>${entry.category}</td>
+							<td>${entry.address_line1}</td>
+							<td>${entry.city}</td>
+							<td>${entry.state}</td>
+							<td>${entry.zip}</td>
+						</tr>
+					`;
+				});
+				document.getElementById('data').innerHTML = tableData;
+			})
+			.catch(error => console.error(error));
+	</script>
+</body>
+</html>
